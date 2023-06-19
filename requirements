@@ -1,2 +1,4 @@
-speech_recognition
+SpeechRecognition
 pyAudio
+gTTS
+pyttsx3
