@@ -2,3 +2,4 @@ SpeechRecognition
 pyAudio
 gTTS
 pyttsx3
+webbrowser
