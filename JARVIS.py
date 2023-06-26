@@ -41,10 +41,11 @@ def command():
 
 
 def make_something(task):
-    if 'ишдкрий сайт' in task:
-        talk('Відкираю')
+    if 'відкрий сайт' in task:
+        talk('Відкриваю')
         url = "https://ituniver.com"
         webbrowser.open(url)
 
-while True():
+
+while True:
     make_something(command())

@@ -3,3 +3,5 @@ pyAudio
 gTTS
 pyttsx3
 webbrowser
+python-dotenv
+openai
