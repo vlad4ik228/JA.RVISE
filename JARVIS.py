@@ -41,7 +41,7 @@ def command():
 
 
 def make_something(task):
-    if 'відкрий сайт' in task:
+    if 'open site' in task:
         talk('Відкриваю')
         url = "https://ituniver.com"
         webbrowser.open(url)
