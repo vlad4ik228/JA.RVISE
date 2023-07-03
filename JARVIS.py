@@ -3,8 +3,25 @@ import webbrowser
 import os
 import sys
 import pyttsx3
-# Якщо немає звуку
 
+# ---------------------------------------------------------
+import openai
+
+from dotenv import load_dotenv as ld
+
+dotenv_path = os.path.join(os.path.dirname(__file__), ".env")
+if os.path.exists(dotenv_path):
+    ld(dotenv_path)
+
+openai.api_key = os.getenv("api_key")
+
+def handle_input(user_input):
+    completion = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo", messages=[{"role": "user", "content": user_input}])
+    return completion
+
+# ---------------------------------------------------------y
+# Якщо немає звуку
 engine = pyttsx3.init()
 # engine.say("Say")
 # engine.runAndWait()
@@ -31,8 +48,8 @@ def command():
 
 
     try:
-        task = r.recognize_google(audio, language='ua-UA').lower()
-        print('Я вас не зрозумів' + task)
+        task = r.recognize_google(audio, language='uk-UA').lower()
+        print('відкриваю' + task)
     except sr.UnknownValueError:
         talk("Я вас не зромів")
         task = command()
@@ -41,10 +58,24 @@ def command():
 
 
 def make_something(task):
-    if 'open site' in task:
+    if 'відкрий' and "сайт" in task:
         talk('Відкриваю')
         url = "https://ituniver.com"
         webbrowser.open(url)
+
+
+    elif "ім'я" and "твое" in task:
+        talk("I am Groot")
+
+
+    elif "стоп" in task:
+        talk("До побачення")
+        sys.exit()
+
+
+    else:
+        ai_response = handle_input(task).choices[0].message.content
+        talk(ai_response)
 
 
 while True:
