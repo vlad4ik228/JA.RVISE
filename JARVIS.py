@@ -26,25 +26,27 @@ engine = pyttsx3.init()
 # engine.say("Say")
 # engine.runAndWait()
 
-
+take = input("Який тип помічника ти хочеш? Обери голосовий (1) чи письмовий (2)")
 def talk(words):
     print(words)
-    engine = pyttsx3.init()
-    engine.say(words)
-    engine.runAndWait()
-    # os.system(" say " + words)
+    if take == 1:
+        engine = pyttsx3.init()
+        engine.say(words)
+        engine.runAndWait()
+        # os.system(" say " + words)
 
 
 talk("Hi, can I help you?")
 
 
 def command():
-    r = sr.Recognizer()
-    with sr.Microphone() as source:
-        print("Say")
-        r.pause_threshould = 1
-        r.adjust_for_ambient_noise(source, duration=1)
-        audio = r.listen(source)
+    if take == 1:
+        r = sr.Recognizer()
+        with sr.Microphone() as source:
+            print("Say")
+            r.pause_threshould = 1
+            r.adjust_for_ambient_noise(source, duration=1)
+            audio = r.listen(source)
 
 
     try:
@@ -53,6 +55,8 @@ def command():
     except sr.UnknownValueError:
         talk("Я вас не зромів")
         task = command()
+    else:
+        task = input("Your task: ")
 
     return task
 
@@ -74,8 +78,16 @@ def make_something(task):
 
 
     else:
-        ai_response = handle_input(task).choices[0].message.content
-        talk(ai_response)
+        try:
+            ai_response = handle_input(task).choices[0].message.content
+            talk(ai_response)
+        except openai.error.ServiceUnavailableError:
+            talk("Sorry, I am going to try again")
+            try:
+                ai_response = handle_input(task).choices[0].message.content
+                talk(ai_response)
+            except openai.error.ServiceUnavailableError:
+                talk("Sorry, can you give me the new task?")
 
 
 while True:
