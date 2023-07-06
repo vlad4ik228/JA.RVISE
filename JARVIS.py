@@ -29,7 +29,7 @@ engine = pyttsx3.init()
 take = input("Який тип помічника ти хочеш? Обери голосовий (1) чи письмовий (2)")
 def talk(words):
     print(words)
-    if take == 1:
+    if take == "1":
         engine = pyttsx3.init()
         engine.say(words)
         engine.runAndWait()
@@ -40,7 +40,7 @@ talk("Hi, can I help you?")
 
 
 def command():
-    if take == 1:
+    if take == "1":
         r = sr.Recognizer()
         with sr.Microphone() as source:
             print("Say")
